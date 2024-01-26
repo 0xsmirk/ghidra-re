@@ -10,6 +10,8 @@ from utils import graphviz
 
 from ghidra.util.graph import DirectedGraph, Vertex, Edge
 from ghidra.graph.viewer import GraphComponent
+# from ghidra.program.model.address import AddressFactory
+from ghidra.program.model.address import Address
 
 found_call_chain = False
 
@@ -80,6 +82,11 @@ def print_call_chain(call_chain, dot):
 
         previous_function = function
         function_chain.append(str(function))
+    print("====================")
+    print(function_chain)
+    print("====================")
+    print(function_references)
+    print("********************")
 
     for function in function_chain:
         print function,
@@ -97,9 +104,13 @@ def call_chain_recurse(call_chain, complete_call, dot):
     :param complete_call: Call that indicates a successfully completed chain.
     :param dot: Call graph
     """
+
     global found_call_chain
 
     function_list = call_chain[0].getCallingFunctions(monitor)
+
+    # print(function_list)
+
     for func in function_list:
         if func == complete_call:
             print_call_chain([func] + call_chain, dot)
@@ -122,23 +133,31 @@ def discover_call_chain(from_function, to_function):
     call_chain_recurse([to_function], from_function, dot)
 
 
-
-
 func_man = currentProgram.getFunctionManager()
+
+# 获取所有的Functions函数
 function_list = [function for function in func_man.getFunctions(True)]
 function_list.sort(key=lambda func: str(func))
+
+print(function_list)
+
 
 from_function = askChoice('Select function',
                           'Select the starting function',
                           function_list,
                           function_list[0])
 
-function_list.remove(from_function)
-to_function = askChoice('Select function',
-                        'Select the ending function',
-                        function_list,
-                        function_list[0])
 
+function_list.remove(from_function)
+# to_function = askChoice('Select function',
+#                         'Select the ending function',
+#                         function_list,
+#                         function_list[0])
+to_function = func_man.getFunctionAt(currentProgram.getAddressFactory().getAddress("0x000093fc"))
+# print(func_man.getFunctionAt(currentProgram.getAddressFactory().getAddress("0x000093fc")))
+print(type(from_function))
+# from_function = function("GetFileValue")
+# to_function = function("<EXTERNAL>::execve")
 print 'Finding x-refs from %s to %s\n' % (from_function, to_function)
 
 discover_call_chain(from_function, to_function)
