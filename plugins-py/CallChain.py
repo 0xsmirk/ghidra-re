@@ -1,7 +1,10 @@
+
 # Display call chain graph between two functions and output to the console.
 #@author fuzzywalls
 #@category TNS
 #@menupath TNS.Call Chain
+
+
 
 import os
 import sys
@@ -82,11 +85,11 @@ def print_call_chain(call_chain, dot):
 
         previous_function = function
         function_chain.append(str(function))
-    print("====================")
-    print(function_chain)
-    print("====================")
-    print(function_references)
-    print("********************")
+    # print("====================")
+    # print(function_chain)
+    # print("====================")
+    # print(function_references)
+    # print("********************")
 
     for function in function_chain:
         print function,
@@ -135,17 +138,21 @@ def discover_call_chain(from_function, to_function):
 
 func_man = currentProgram.getFunctionManager()
 
-# 获取所有的Functions函数
 function_list = [function for function in func_man.getFunctions(True)]
 function_list.sort(key=lambda func: str(func))
 
-print(function_list)
+# print(function_list)
 
+for func in function_list:
+    # print("Function Name is: {}, function type is :{}, function's address is: {}".format(func, type(func), func.getBody()))
+    if func.getName() == 'main':
+        print("Function Name is: {}, function type is :{}, function's address is: {}".format(func, type(func), func.getBody()))
+        from_function = func
 
-from_function = askChoice('Select function',
-                          'Select the starting function',
-                          function_list,
-                          function_list[0])
+# from_function = askChoice('Select function',
+#                           'Select the starting function',
+#                           function_list,
+#                           function_list[0])
 
 
 function_list.remove(from_function)
@@ -155,7 +162,8 @@ function_list.remove(from_function)
 #                         function_list[0])
 to_function = func_man.getFunctionAt(currentProgram.getAddressFactory().getAddress("0x000093fc"))
 # print(func_man.getFunctionAt(currentProgram.getAddressFactory().getAddress("0x000093fc")))
-print(type(from_function))
+print(type(to_function))
+print(to_function)
 # from_function = function("GetFileValue")
 # to_function = function("<EXTERNAL>::execve")
 print 'Finding x-refs from %s to %s\n' % (from_function, to_function)
