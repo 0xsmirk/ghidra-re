@@ -8,6 +8,8 @@ from ghidra.util.graph import DirectedGraph, Vertex, Edge
 from ghidra.graph.viewer import GraphComponent
 from ghidra.program.model.address import Address
 
+import __main__ as ghidra_app
+
 found_call_chain = False
 
 def get_references(caller, callee):
@@ -97,23 +99,39 @@ def discover_call_chain(from_function, to_function):
     call_chain_recurse([to_function], from_function)
 
 
-func_man = currentProgram.getFunctionManager()
+def run():
+    # get script params
+    args = ghidra_app.getScriptArgs()
+    if len(args) == 0:
+        cur_program_name = ghidra_app.currentProgram.getName()
+    else:
+        vul_func = args[0]
 
-function_list = [function for function in func_man.getFunctions(True)]
-function_list.sort(key=lambda func: str(func))
+    print(vul_func)
+    print(args)
+
+    # begin analysis
+    func_man = currentProgram.getFunctionManager()
+
+    function_list = [function for function in func_man.getFunctions(True)]
+    function_list.sort(key=lambda func: str(func))
 
 
-for func in function_list:
-    if func.getName() == 'main' or func.getName() == 'entry':
-        print("Function Name is: {}, function type is :{}, function's address is: {}".format(func, type(func), func.getBody()))
-        from_function = func
+    for func in function_list:
+        if func.getName() == 'main' or func.getName() == 'entry':
+            print("Function Name is: {}, function type is :{}, function's address is: {}".format(func, type(func), func.getBody()))
+            from_function = func
 
 
 
-function_list.remove(from_function)
+    function_list.remove(from_function)
 
-to_function = func_man.getFunctionAt(currentProgram.getAddressFactory().getAddress("0x000093fc"))
+    to_function = func_man.getFunctionAt(currentProgram.getAddressFactory().getAddress("0x000093fc"))
 
-print 'Finding x-refs from %s to %s\n' % (from_function, to_function)
+    print 'Finding x-refs from %s to %s\n' % (from_function, to_function)
 
-discover_call_chain(from_function, to_function)
+    discover_call_chain(from_function, to_function)
+
+# Starts execution here
+if __name__ == '__main__':
+    run()
