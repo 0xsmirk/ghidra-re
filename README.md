@@ -1,4 +1,4 @@
-# ghirda-re
+# ghidra-re
 
 > Ghidra Reverse
 > Ghidra Version: V10.2.2
