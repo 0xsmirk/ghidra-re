@@ -142,6 +142,7 @@ ghidra_scripts_install(){
     fi
 
     # 将ghidra的java插件安装到路径下
+    cp -rf ${GHIDRA_INSTALL}/../plugins-java/* $HOME/ghidra_scripts/
 }
 
 # step1:安装Ghidra逆向分析工具
