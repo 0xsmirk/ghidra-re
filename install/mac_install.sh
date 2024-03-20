@@ -141,6 +141,12 @@ ghidra_scripts_install(){
         # 添加重试机制或其他处理逻辑
     fi
 
+    if [ -f "$HOME/ghidra_scripts/" ]; then
+        echo "${GREEN}插件目录存在${NC}"
+    else
+        mkdir $HOME/ghidra_scripts/
+    fi
+    
     # 将ghidra的java插件安装到路径下
     cp -rf ${GHIDRA_INSTALL}/../plugins-java/* $HOME/ghidra_scripts/
 }
