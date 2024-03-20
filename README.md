@@ -20,7 +20,12 @@ step1:直接运行`install`目录下的安装脚本自动化进行安装
 
 step2:运行`ghidra`程序启动`Ghidrathon`插件
 
-## 0x03.感谢
+## 0x03.插件
+
+- [x] plugins-py/GetOffsetAddr.py:获取鼠标所在位置的相对偏移地址
+
+
+## 0x04.感谢
 
 - [PAGalaxyLab's ghidra_scripts](https://github.com/PAGalaxyLab/ghidra_scripts)
 - [grayhatacademy's ghidra_scripts](https://github.com/grayhatacademy/ghidra_scripts)

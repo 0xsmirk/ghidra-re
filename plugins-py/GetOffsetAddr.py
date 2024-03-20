@@ -1,6 +1,9 @@
-#@description Get offset address
-#@author smile
+# Get offset address
+#@author smile-e3 alchemist_clb@163.com
 #@category Address
+#@keybinding 
+#@menupath 
+#@toolbar 
 
 # Get the address corresponding to the mouse
 currentAddr = currentLocation().getAddress()
