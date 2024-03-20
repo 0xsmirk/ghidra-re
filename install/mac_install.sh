@@ -155,7 +155,7 @@ ghidra_scripts_install(){
 #   None
 #######################################
 banner(){
-    # 判断pyenv是否存在，默认pyenv的安装路径为$HOME/.pyenv
+    # 判断figlet是否存在
     command_name="figlet"
     figlet_exists=$(check_command_exists "$command_name")
     if [ "$figlet_exists" = "False" ]; then
