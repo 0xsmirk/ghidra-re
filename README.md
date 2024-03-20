@@ -23,7 +23,8 @@ step2:运行`ghidra`程序启动`Ghidrathon`插件
 ## 0x03.插件
 
 - [x] plugins-py/GetOffsetAddr.py:获取鼠标所在位置的相对偏移地址
-
+- [x] plugins-py/ArmRopDouble.py:ARM Rop
+- [x] plugins-py/ArmRopFind.py:ARM Rop链查找
 
 ## 0x04.感谢
 
