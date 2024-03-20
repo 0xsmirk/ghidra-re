@@ -116,8 +116,8 @@ class ArmRop(object):
             if comment.startswith('rop'):
                 for saved in saved_bookmarks:
                     if saved.getComment().lower() == comment:
-                        print 'Duplicate bookmark found: {} at {} and {}'.format(
-                            comment, saved.getAddress(), bookmark.getAddress())
+                        print('Duplicate bookmark found: {} at {} and {}'.format(
+                            comment, saved.getAddress(), bookmark.getAddress()))
                         return
                 saved_bookmarks.append(bookmark)
 
@@ -499,7 +499,7 @@ class RopGadgets(object):
 
         if gadgets:
             utils.table_pretty_print(title, gadgets)
-        print 'Found %d matching gadgets.' % len(gadgets)
+        print('Found %d matching gadgets.' % len(gadgets))
 
     def print_summary(self):
         """
@@ -509,19 +509,19 @@ class RopGadgets(object):
             title = summary_format.format(
                 'Gadget Name', 'Gadget Offset', 'Summary')
             line_len = len(title)
-            print '-' * line_len
-            print title
-            print '-' * line_len
+            print('-' * line_len)
+            print(title)
+            print('-' * line_len)
             for gadget in self.gadgets:
                 instructions = gadget.get_instructions()
-                print summary_format.format(gadget.name,
+                print(summary_format.format(gadget.name,
                                             instructions[0].getAddress(),
-                                            instructions[0])
+                                            instructions[0]))
                 for instruction in instructions[1:]:
-                    print summary_format.format('', '', instruction)
-                print '-' * line_len
+                    print(summary_format.format('', '', instruction))
+                print('-' * line_len)
         else:
-            print 'No bookmarks with "rop" found.'
+            print('No bookmarks with "rop" found.')
 
 
 class DoubleGadget(object):
@@ -554,7 +554,7 @@ class DoubleGadget(object):
         """
         instruction_list = self.get_instructions()
         for instruction in instruction_list:
-            print '%s : %s' % (instruction.getAddress(), instruction)
+            print('%s : %s' % (instruction.getAddress(), instruction))
 
     def overwrites_register(self, register):
         """
@@ -644,7 +644,7 @@ class DoubleGadgets(RopGadgets):
                     str(gadget.second.call.getAddress()), gadget.second.control_jump()])
             utils.table_pretty_print(title, gadgets)
 
-        print 'Found {} matching gadgets.\n'.format(len(self.gadgets))
+        print('Found {} matching gadgets.\n'.format(len(self.gadgets)))
 
 
 def instruction_matches(ins, matches):

@@ -6,8 +6,9 @@
 
 import re
 from utils import armrop, utils
+import ghidra
 
-utils.allowed_processors(currentProgram, 'ARM')
+utils.allowed_processors(currentProgram(), 'ARM')
 
 op1 = None
 op2 = None
@@ -27,10 +28,10 @@ except ValueError:
 if not mnem.startswith('.*'):
     mnem = '.*' + mnem
 
-print 'Searching for %s' % search
+print('Searching for %s' % search)
 search_ins = armrop.ArmInstruction(mnem, op1, op2, op3)
 
-arm_rop = armrop.ArmRop(currentProgram)
+arm_rop = armrop.ArmRop(currentProgram())
 results = arm_rop.find_instructions([search_ins])
 
 results.pretty_print()

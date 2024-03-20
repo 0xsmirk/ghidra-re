@@ -3,12 +3,12 @@
 #@category TNS
 #@menupath TNS.Arm Rop.Double Jumps
 
-
+import ghidra
 from utils import armrop, utils
 
-utils.allowed_processors(currentProgram, 'ARM')
+utils.allowed_processors(currentProgram(), 'ARM')
 
-arm_rop = armrop.ArmRop(currentProgram)
+arm_rop = armrop.ArmRop(currentProgram())
 doubles = arm_rop.find_doubles()
 
 doubles.pretty_print()
