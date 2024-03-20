@@ -145,11 +145,40 @@ ghidra_scripts_install(){
     cp -rf ${GHIDRA_INSTALL}/../plugins-java/* $HOME/ghidra_scripts/
 }
 
-# step1:安装Ghidra逆向分析工具
-ghidra_install
+#######################################
+# 生成Banner
+# Globals:
+#   None
+# Arguments:
+#   None
+# Returns:
+#   None
+#######################################
+banner(){
+    # 判断pyenv是否存在，默认pyenv的安装路径为$HOME/.pyenv
+    command_name="figlet"
+    figlet_exists=$(check_command_exists "$command_name")
+    if [ "$figlet_exists" = "False" ]; then
+        brew install figlet
+    fi
+    banner_string=$(figlet -f "doom" "Ghidra-Re")
+    echo "$banner_string"
+    echo "                                     by smile-e3"
+}
 
-# step2:编译安装Ghidrathon第三方python脚本运行插件
-ghidrathon_install
+# 函数：主函数入口
+main(){
+    # step0:打印Banner
+    banner
 
-# step3:将Ghidra的插件安装到MAC默认的路径
-ghidra_scripts_install
+    # step1:安装Ghidra逆向分析工具
+    ghidra_install
+
+    # step2:编译安装Ghidrathon第三方python脚本运行插件
+    ghidrathon_install
+
+    # step3:将Ghidra的插件安装到MAC默认的路径
+    ghidra_scripts_install
+}
+
+main
