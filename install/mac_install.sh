@@ -190,7 +190,7 @@ main(){
     # 判断JAVA17是否安装
     if [ "$(check_java_version)" = "False" ]; then
         echo "${RED}[ERROR]JAVA 17不存在,请安装${NC}"
-        exit
+        exit 1
     fi
 
     # 判断依赖工具是否存在
@@ -205,11 +205,14 @@ main(){
         do
             if [ "$cmd" = "brew" ]; then
                 echo "${RED}[ERROR]brew不存在,请安装${NC}"
-                exit
+                exit 1
             else
-                echo "$cmd"
-                #TODO:如果brew命令安装功能存在需要判断
                 brew install ${cmd}
+                # 检查命令返回值
+                if [ $? -ne 0 ]; then
+                    echo "${RED}${cmd}安装失败,请检查错误信息${NC}"
+                    exit 1
+                fi
             fi
         done
     fi
